@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PROJECT 456: ARCHITECTURE OF SURVIVAL — Squid Game Digital Code Art</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Rajdhani:wght@500;600;700&family=Noto+Sans+KR:wght@400;700;900&display=swap" rel="stylesheet">
+</head>
+<body class="crt-enabled">
+  <!-- Scanline & Vignette CRT Effect Overlays -->
+  <div class="crt-overlay" id="crtOverlay"></div>
+  <div class="vignette-overlay"></div>
+  <div class="glitch-flash" id="glitchFlash"></div>
+
+  <!-- Main Canvas Viewport -->
+  <div id="canvas-container">
+    <canvas id="artCanvas"></canvas>
+  </div>
+
+  <!-- HUD Interface / Surveillance System Overlay -->
+  <header class="hud-header">
+    <div class="hud-left">
+      <div class="symbol-badge">
+        <span class="sym sym-circle">○</span>
+        <span class="sym sym-triangle">△</span>
+        <span class="sym sym-square">□</span>
+      </div>
+      <div class="title-block">
+        <h1 class="hud-title">PROJECT 456 <span class="accent-pink">//</span> <span class="ko-title">오징어 게임</span></h1>
+        <p class="hud-subtitle">ARCHITECTURE OF SURVIVAL &bull; CODE ART ATTACK 2026</p>
+      </div>
+    </div>
+
+    <div class="hud-center">
+      <div class="prize-display">
+        <span class="prize-label">ACCUMULATED PRIZE POOL</span>
+        <div class="prize-value" id="prizeDisplay">₩ 45,600,000,000</div>
+        <div class="prize-sub">455 ELIMINATED &bull; 1 SURVIVOR</div>
+      </div>
+    </div>
+
+    <div class="hud-right">
+      <div class="game-status-badge" id="gameStatusBadge">
+        <div class="status-indicator" id="statusIndicator"></div>
+        <div class="status-text-group">
+          <span class="status-sub">SURVEILLANCE AI</span>
+          <span class="status-main" id="statusText">GREEN LIGHT</span>
+        </div>
+      </div>
+      <div class="audio-control-container">
+        <button id="audioToggleBtn" class="hud-btn audio-btn" title="Toggle Synthesized Soundscape">
+          <span class="audio-icon" id="audioIcon">🔇</span>
+          <span id="audioLabel">AUDIO OFF</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Side Telemetry / Player Status Monitor -->
+  <aside class="hud-telemetry left">
+    <div class="telemetry-card">
+      <div class="card-header">SUBJECT DOSSIER</div>
+      <div class="player-profile">
+        <div class="player-number">456</div>
+        <div class="player-name">SEONG GI-HUN</div>
+        <div class="player-status-tag survivor">SURVIVOR</div>
+      </div>
+      <div class="vital-signs">
+        <div class="vital-row">
+          <span>HEART RATE</span>
+          <span id="bpmValue" class="vital-val">74 BPM</span>
+        </div>
+        <canvas id="ecgCanvas" width="180" height="40"></canvas>
+      </div>
+      <div class="vital-row">
+        <span>MOTION SENSOR</span>
+        <span id="motionStatus" class="vital-val active-green">STATIONARY</span>
+      </div>
+      <div class="vital-row">
+        <span>SECURITY LEVEL</span>
+        <span class="vital-val accent-pink">FRONT MAN CLEARANCE</span>
+      </div>
+    </div>
+
+    <div class="telemetry-card player-matrix-card">
+      <div class="card-header">ROSTER ATTRITION (456 UNITS)</div>
+      <div class="player-grid" id="playerGrid"></div>
+    </div>
+  </aside>
+
+  <!-- Interactive Control Deck (Bottom) -->
+  <nav class="hud-controls">
+    <div class="controls-group modes">
+      <span class="ctrl-group-title">ART MODES:</span>
+      <button class="mode-btn active" data-mode="all">
+        <span class="btn-num">01</span> CINEMATIC MASTERWORK
+      </button>
+      <button class="mode-btn" data-mode="doll">
+        <span class="btn-num">02</span> YOUNG-HEE PANOPTICON
+      </button>
+      <button class="mode-btn" data-mode="piggy">
+        <span class="btn-num">03</span> 45.6B WON CASCADE
+      </button>
+      <button class="mode-btn" data-mode="geometry">
+        <span class="btn-num">04</span> SACRED GEOMETRY
+      </button>
+      <button class="mode-btn" data-mode="stairs">
+        <span class="btn-num">05</span> ESCHER LABYRINTH
+      </button>
+    </div>
+
+    <div class="controls-group actions">
+      <button id="toggleLightBtn" class="action-btn light-btn">
+        <span class="btn-glow"></span>
+        <span id="lightBtnText">🚨 TRIGGER RED LIGHT</span>
+      </button>
+      <button id="dropCoinsBtn" class="action-btn gold-btn">
+        🪙 RAIN 45.6B WON
+      </button>
+      <button id="toggleCrtBtn" class="action-btn utility-btn" title="Toggle CRT scanlines and vintage monitor curve">
+        📺 CRT FX
+      </button>
+      <button id="exportScreenshotBtn" class="action-btn capture-btn" title="Export crystal-clear 4K submission artwork">
+        📸 CAPTURE 4K ARTWORK
+      </button>
+    </div>
+  </nav>
+
+  <!-- Target Reticle & Cursor Tracking Elements -->
+  <div class="crosshair-hud" id="crosshairHud">
+    <div class="crosshair-box"></div>
+    <div class="crosshair-label" id="crosshairLabel">TARGET ACQUIRED: [P-456]</div>
+  </div>
+
+  <!-- Audio Visualizer Bar at Bottom -->
+  <div class="audio-spectrum-bar" id="audioSpectrumBar"></div>
+
+  <!-- Toast Notification System -->
+  <div id="toastNotification" class="hud-toast"></div>
+
+  <!-- Core Scripts -->
+  <script src="audio.js"></script>
+  <script src="art.js"></script>
+</body>
+</html>
